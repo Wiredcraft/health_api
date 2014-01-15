@@ -15,4 +15,4 @@ fi
 
 git clone https://gist.github.com/8430606.git /opt/whc
 
-cp /opt/whc-server /etc/init.d/whc-server
+cp /opt/whc/whc-server /etc/init.d/whc-server
