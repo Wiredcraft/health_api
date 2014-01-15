@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# whc daemon
+# chkconfig: 345 20 80
+# description: whc daemon
+# processname: whc
+
+export USER=root
+export PATH=/opt/node/bin:$PATH
+export NODE_ENV=production
+export NODE_PATH=/opt/node/lib/node_modules:$NODE_PATH
+export DEBUG="whc:*"
+
+WHC_HOME=/opt/whc
+SCRIPT=$WHC_HOME/server.js
+DAEMON=`which forever`
+DAEMONO_PTS=""
+
+NAME=whc-server
+DESC="wiredcraft http checker server"
+LOGFILE=/var/log/$NAME.log
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+
+do_install() {
+    printf "%-50s" "Installing dependencies ..."
+    npm install -g debug forever express redis cradle request > /dev/null
+}
+
+case "$1" in
+start)
+    printf "%-50s" "Starting $DESC ..."
+    do_install
+
+    bash -c "$DAEMON start \
+        --append \
+        --pidFile $PIDFILE \
+        --logFile $LOGFILE \
+        $SCRIPT" - $USER
+;;
+stop)
+    printf "%-50s" "Stopping $DESC ..."
+    bash -c "$DAEMON stop $SCRIPT" - $USER
+;;
+
+restart)
+    $0 stop
+    $0 start
+;;
+
+*)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
