@@ -1,5 +1,7 @@
 #!/bin/bash
-
+WHC_ROOT=/opt/whc
+WHC_SCRIPT=/opt/whc-server
+WHC_DAEMON=/etc/init.d/whc-server
 NODE_BIN=`which node`
 NPM_BIN=`which npm`
 
@@ -13,6 +15,13 @@ if [[ ! ${NPM_BIN} ]];then
     exit 1
 fi
 
-git clone https://gist.github.com/8430606.git /opt/whc
+if [ ! -d ${WHC_ROOT}/.git ];then
+    git clone https://gist.github.com/8430606.git ${WHC_ROOT}
+else
+    cd ${WHC_ROOT}
+    git pull
+fi
 
-cp /opt/whc/whc-server /etc/init.d/whc-server
+cp ${WHC_SCRIPT} ${WHC_DAEMON}
+
+echo "Run [sudo] service whc-server [re]start"
