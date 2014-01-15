@@ -5,6 +5,7 @@ export PATH=/opt/node/bin:$PATH
 export NODE_PATH=/opt/node/lib/node_modules:$NODE_PATH
 
 NAME="wcl-checker"
+DAEMON=`which node`
 DESC="wiredcraft http Checker"
 LOGFILE=/var/log/${NAME}.log
 PIDFILE=/var/run/${NAME}.pid
@@ -25,7 +26,7 @@ do_start() {
         --user $USER \
         --name $NAME \
         --pidfile $PIDFILE \
-        --startas $DAEMON <<SCRIPT
+        --startas $DAEMON -- -e <<SCRIPT
        /**
         *
         */
