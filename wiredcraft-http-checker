@@ -64,7 +64,7 @@ var checks = {
         return cb(null);
     },
     api: function(cb) {
-        request.get('http://127.0.0.1:3000', function(err) {
+        request.get('http://127.0.0.1:3000/ping', function(err) {
             return cb(err || null);
         });
     }
