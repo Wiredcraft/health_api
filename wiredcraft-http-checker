@@ -14,7 +14,7 @@ RETRY=5
 #
 do_install() {
     echo "Installing $DESC dependencies ..."
-    npm install -g debug express redis cradle request > /dev/null
+    npm install -g forever debug express redis cradle request > /dev/null
 }
 
 #
