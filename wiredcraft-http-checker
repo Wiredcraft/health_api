@@ -19,7 +19,7 @@ do_start() {
     echo "Starting $DESC daemon ..."
     start-stop-daemon --start --oknodo \
         --user $USER \
-        --name $NAME \
+        #--name $NAME \
         --pidfile $PIDFILE \
         --exec node <<SCRIPT
         /**
@@ -116,7 +116,7 @@ do_stop() {
     echo "Stopping $DESC daemon ..."
     start-stop-daemon --stop --oknodo \
         --user $USER \
-        --name $NAME \
+        #--name $NAME \
         --pidfile $PIDFILE \
         --retry $RETRY
 
