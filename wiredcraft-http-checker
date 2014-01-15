@@ -2,10 +2,12 @@
 
 export USER=root
 export PATH=/opt/node/bin:$PATH
+export NODE_ENV=production
 export NODE_PATH=/opt/node/lib/node_modules:$NODE_PATH
+export DEBUG="wcl-http-checker:*"
 
 NAME="wcl-checker"
-DAEMON=`which node`
+DAEMON=`which forever`
 DESC="wiredcraft http Checker"
 LOGFILE=/var/log/${NAME}.log
 PIDFILE=/var/run/${NAME}.pid
@@ -20,13 +22,17 @@ do_install() {
 #
 do_start() {
     echo "Starting $DESC daemon ..."
-    start-stop-daemon --start \
-        --oknodo \
-        --make-pidfile \
-        --user $USER \
-        --name $NAME \
-        --pidfile $PIDFILE \
-        --startas $DAEMON -- -e <<SCRIPT
+    bash -c "$DAEMON start \
+        --append \
+        --pidFile $PID_FILE \
+        --logFile $LOG_FILE <<SCRIPT
+    # start-stop-daemon --start \
+    #     --oknodo \
+    #     --make-pidfile \
+    #     --user $USER \
+    #     --name $NAME \
+    #     --pidfile $PIDFILE \
+    #     --startas $DAEMON start <<SCRIPT
        /**
         *
         */
@@ -115,7 +121,7 @@ do_start() {
         app.listen(port);
         console.log("Checker running at %s", port);
 SCRIPT
-
+" - $USER
 }
 
 do_stop() {
