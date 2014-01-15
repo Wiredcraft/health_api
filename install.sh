@@ -1,6 +1,6 @@
 #!/bin/bash
 WHC_ROOT=/opt/whc
-WHC_SCRIPT=/opt/whc-server
+WHC_SCRIPT=${WHC_ROOT}/whc-server
 WHC_DAEMON=/etc/init.d/whc-server
 NODE_BIN=`which node`
 NPM_BIN=`which npm`
