@@ -2,7 +2,7 @@
 
 ### Install
 ```bash
-[sudo] bash <(curl -s https://raw2.github.com/Wiredcraft/health_api/master/install.sh)
+[sudo] bash -c "$(curl -fsSL https://raw2.github.com/Wiredcraft/health_api/master/install.sh)"
 ```
 
 ### Acess

@@ -8,12 +8,14 @@ NODE_BIN=`which node`
 NPM_BIN=`which npm`
 
 if [[ ! ${NODE_BIN} ]];then
-  echo "node not found"
+  echo "Error: node not found in ${PATH}"
+  echo "Installation terminated"
   exit 1
 fi
 
 if [[ ! ${NPM_BIN} ]];then
-  echo "npm not found"
+  echo "Error: npm not found in ${PATH}"
+  echo "Installation terminated"
   exit 1
 fi
 
