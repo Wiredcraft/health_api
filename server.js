@@ -6,11 +6,15 @@ var basicAuthUsername = process.env.WHC_BASIC_AUTH_USERNAME || 'wiredcraft';
 var basicAuthPassword = process.env.WHC_BASIC_AUTH_PASSWORD || 'wuding1189426';
 
 var http = require('http');
-var express = require('express');
 var exec = require('child_process').exec;
+
 var redis = require('redis');
+var express = require('express');
 var cradle = require('cradle');
 var request = require('request');
+
+var info = require('debug')('whi:server:info');
+var debug = require('debug')('whi:server:debug');
 
 var checks = {
     redis: function(cb) {
@@ -26,6 +30,11 @@ var checks = {
     },
     couchdb: function(cb) {
         request.get('http://127.0.0.1:5984', function(err) {
+            return cb(err || null);
+        });
+    },
+    couchbase: function(cb) {
+        request.get('http://127.0.0.1:8091', function(err) {
             return cb(err || null);
         });
     },
@@ -66,20 +75,30 @@ var basicAuth = express.basicAuth(function(username, password, callback) {
     callback(null, (username === basicAuthUsername && password === basicAuthPassword));
 });
 
-
 app.get('^/*$', basicAuth, function(req, res) {
-    console.log(req.params);
+    info("Check: %s", req.params[0]);
     var component = req.params[0];
-
     var check = checks[component];
 
-    if (!check) return res.send(400, 'Not exit');
+    if (!check) {
+        debug('Check: %s dose not exit', check);
+        return res.send(404);
+    }
 
     check.call(this, function(err) {
-        if (err) return res.send(500);
+        if (err) {
+            debug(err.message || err);
+            return res.send(500);
+        }
 
         return res.send(200);
     });
 });
 
-app.listen(port);
+//
+var server = http.createServer(app);
+
+server.listen(port, function(err) {
+    if (err) return debug(err.message || err);
+    info('Http server listening on port %d', port);
+});

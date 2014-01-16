@@ -25,7 +25,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 do_install() {
     printf "%-50s" "Installing dependencies ..."
     cd ${WHI_REPO}
-    npm install forever debug express redis cradle request > /dev/null
+    npm install > /dev/null
 }
 
 do_start() {

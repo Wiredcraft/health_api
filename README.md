@@ -1,4 +1,4 @@
-## Wiredcraft http service health checking api
+## Simple web API that check the health of services
 
 ### Prerequisites
 * nodejs >= 0.10.24
