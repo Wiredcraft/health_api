@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WHI_REPO="git@github.com:Wiredcraft/health_api.git"
+WHI_REPO="https://github.com/Wiredcraft/health_api.git"
 WHI_ROOT=/opt/whi
 WHI_SCRIPT=${WHI_ROOT}/whi-server
 WHI_DAEMON=/etc/init.d/whi-server
