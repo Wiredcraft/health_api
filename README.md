@@ -1,4 +1,4 @@
-## Wiredcraf http service health checking api
+## Wiredcraft http service health checking api
 
 ### Install
 ```bash
