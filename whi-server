@@ -1,22 +1,22 @@
 #!/bin/bash
 
-# whc daemon
+# whi daemon
 # chkconfig: 345 20 80
-# description: whc daemon
-# processname: whc
+# description: whi daemon
+# processname: whi
 
 export USER=root
 export PATH=/opt/node/bin:$PATH
 export NODE_ENV=production
 export NODE_PATH=/opt/node/lib/node_modules:$NODE_PATH
-export DEBUG="whc:*"
+export DEBUG="whi:*"
 
-WHC_HOME=/opt/whc
-SCRIPT=$WHC_HOME/server.js
+WHI_HOME=/opt/whi
+SCRIPT=$WHI_HOME/server.js
 DAEMON=`which forever`
 DAEMONO_PTS=""
 
-NAME=whc-server
+NAME=whi-server
 DESC="wiredcraft http checker server"
 LOGFILE=/var/log/$NAME.log
 PIDFILE=/var/run/$NAME.pid
