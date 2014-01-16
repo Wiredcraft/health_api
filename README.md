@@ -1,10 +1,11 @@
-## Wiredcraf http servic checker
+## Wiredcraf http service health checking api
 
-### Port - 5002
+### Install
+```bash
+[sudo] bash <(curl -s https://github.com/Wiredcraft/health_api/blob/master/install.sh)
+```
 
-<!--
-### Basic auth
-
-* username - wiredcraf
-* password - wuding1189426
--->
+### Acess
+* Http port - `50021
+* username - `wiredcraf`
+* password - `wuding1189426`

@@ -1,7 +1,9 @@
 #!/bin/bash
-WHC_ROOT=/opt/whc
-WHC_SCRIPT=${WHC_ROOT}/whc-server
-WHC_DAEMON=/etc/init.d/whc-server
+
+WHI_REPO=git@github.com:Wiredcraft/health_api.git
+WHI_ROOT=/opt/whi
+WHI_SCRIPT=${WHI_ROOT}/whi-server
+WHI_DAEMON=/etc/init.d/whi-server
 NODE_BIN=`which node`
 NPM_BIN=`which npm`
 
@@ -15,13 +17,13 @@ if [[ ! ${NPM_BIN} ]];then
     exit 1
 fi
 
-if [ ! -d ${WHC_ROOT}/.git ];then
-    git clone https://gist.github.com/8430606.git ${WHC_ROOT}
+if [ ! -d ${WHI_ROOT}/.git ];then
+    git ${WHI_REPO} ${WHI_ROOT}
 else
-    cd ${WHC_ROOT}
+    cd ${WHI_ROOT}
     git pull
 fi
 
-cp ${WHC_SCRIPT} ${WHC_DAEMON}
+cp ${WHI_SCRIPT} ${WHI_DAEMON}
 
-echo "Run [sudo] service whc-server [re]start"
+echo "Run [sudo] service whi-server [re]start"
