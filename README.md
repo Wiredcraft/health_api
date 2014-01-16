@@ -6,6 +6,6 @@
 ```
 
 ### Acess
-* Http port - `50021
+* Http port - `5002`
 * username - `wiredcraf`
 * password - `wuding1189426`
