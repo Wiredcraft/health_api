@@ -24,7 +24,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 do_install() {
     printf "%-50s" "Installing dependencies ..."
-    cd ${WHI_REPO}
+    cd ${WHI_ROOT}
     npm install > /dev/null
 }
 
