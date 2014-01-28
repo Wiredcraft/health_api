@@ -5,6 +5,7 @@
   "description": "Simple web API that check the health of services",
   "main": "server.js",
   "dependencies": {
+    "express": "*",
     "forever": "~0.10.11",
     "debug": "~0.7.4",
     "redis": "~0.10.0",
