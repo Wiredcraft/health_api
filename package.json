@@ -1,6 +1,6 @@
 {
   "name": "health_api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Simple web API that check the health of services",
   "main": "server.js",
