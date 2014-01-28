@@ -5,6 +5,7 @@ var port = process.env.WHC_PORT || 5002;
 var basicAuthUsername = process.env.WHC_BASIC_AUTH_USERNAME || 'wiredcraft';
 var basicAuthPassword = process.env.WHC_BASIC_AUTH_PASSWORD || 'wuding1189426';
 
+var tcp = require('net');
 var http = require('http');
 var exec = require('child_process').exec;
 
@@ -54,9 +55,12 @@ var checks = {
         });
     },
     mongooseim: function(cb) {
-        exec('/usr/local/opt/mongooseim/ejabberd/bin/ejabberdctl status', function(err) {
-            return cb(err || null);
-        });
+        try {
+            tcp.connect({port:5222});
+            return cb(null);
+        } catch(err) {
+            return cb(err);
+        }
     },
     docker: function(cb) {
         return cb(null);
