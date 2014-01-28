@@ -8,7 +8,7 @@
 [sudo] bash -c "$(curl -fsSL https://raw2.github.com/Wiredcraft/health_api/master/install.sh)"
 ```
 
-### Acess
+### Access
 * Http port - `5002`
 * username - `wiredcraf`
 * password - `wuding1189426`
