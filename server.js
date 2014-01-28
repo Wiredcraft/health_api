@@ -11,7 +11,6 @@ var express = require('express');
 var info = require('debug')('whi:server:info');
 var debug = require('debug')('whi:server:debug');
 
-
 var checks = require('./Checksfile');
 
 var app = express();

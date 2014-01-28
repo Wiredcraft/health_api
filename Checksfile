@@ -3,6 +3,7 @@
 
 var exec = require('child_process').exec;
 
+var tcp = require('tcp');
 var redis = require('redis');
 var cradle = require('cradle');
 var request = require('request');
@@ -45,9 +46,12 @@ module.exports = {
         });
     },
     mongooseim: function(cb) {
-        exec('/usr/local/opt/mongooseim/ejabberd/bin/ejabberdctl status', function(err) {
-            return cb(err || null);
-        });
+        try {
+            tcp.connect({port:5222});
+            return cb(null);
+        } catch(err) {
+            return cb(err);
+        }
     },
     docker: function(cb) {
         return cb(null);
