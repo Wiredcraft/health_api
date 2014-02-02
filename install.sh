@@ -50,7 +50,7 @@ fi
 echo "Setting up API auto-health script"
 cat > /etc/cron.d/whi-server-health << EOF
 # Simple health script that attempts to connect to the API and restart it on failure
-* * * * * root curl http://$USER:$PASS@localhost:$PORT/api > /dev/null 2>&1 || (logger "restarting whi-server"  && service whi-server restart)
+* * * * * root curl --fail http://$USER:$PASS@localhost:$PORT/api > /dev/null 2>&1 || (logger "restarting whi-server"  && service whi-server restart)
 EOF
 
 echo "Preparing init script"
