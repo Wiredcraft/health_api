@@ -19,13 +19,41 @@ if [[ ! ${NPM_BIN} ]];then
   exit 1
 fi
 
+echo -n "Basic auth - port [5002]: "
+read PORT
+echo -n "Basic auth - user [wiredcraft]: "
+read USER
+echo -n "Basic auth - pass: "
+read PASS
+
+# Apply defauts
+if [[ -z "$PORT" ]]; then
+  PORT=5002
+fi
+if [[ -z "$USER" ]]; then
+  USER=wiredcraft
+fi
+if [[ -z "$PASS" ]]; then
+  echo "You need to specify a password. Exiting..."
+  exit 1
+fi
+
 if [ ! -d ${WHI_ROOT}/.git ];then
+  echo "Fetching whi-server code"
   git clone ${WHI_REPO} ${WHI_ROOT}
 else
+  echo "Updating whi-server code"
   cd ${WHI_ROOT}
   git pull
 fi
 
-cp ${WHI_SCRIPT} ${WHI_DAEMON}
+echo "Setting up API auto-health script"
+cat > /etc/cron.d/whi-server-health << EOF
+# Simple health script that attempts to connect to the API and restart it on failure
+* * * * * root curl http://$USER:$PASS@localhost:$PORT/api > /dev/null 2>&1 || (logger "restarting whi-server"  && service whi-server restart)
+EOF
 
+echo "Preparing init script"
+cp ${WHI_SCRIPT} ${WHI_DAEMON}
+sed -i "s/PORT/$PORT/g" -i "s/USER/$USER/g" -i "s/PASS/$PASS/g" ${WHI_DAEMON}
 echo "Run [sudo] service whi-server [re]start"
