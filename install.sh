@@ -55,5 +55,5 @@ EOF
 
 echo "Preparing init script"
 cp ${WHI_SCRIPT} ${WHI_DAEMON}
-sed -i "s/API_PORT/$PORT/g" -i "s/API_USERNAME/$USER/g" -i "s/API_PASSWORD/$PASS/g" ${WHI_DAEMON}
+sed -e "s/API_PORT/$PORT/g" -e "s/API_USERNAME/$USER/g" -e "s/API_PASSWORD/$PASS/g" ${WHI_DAEMON}
 echo "Run [sudo] service whi-server [re]start"
