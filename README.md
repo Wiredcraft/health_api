@@ -9,14 +9,16 @@
 ```
 
 ## Access
-* Http port - `5002`
-* username - `wiredcraf`
-* password - `wuding1189426`
+* Http port - default: `5002`
+* username - default: `wiredcraft`
+* password - default: prompted on install - then visible in init script
 
 __curl example__
 
 ```bash
-curl -u wiredcraft:wuding1189426 http://127.0.0.1:5002/{component}
+curl -u user:pass http://127.0.0.1:5002/{component}
+# or 
+curl http://user:pass@127.0.0.1:5002/{component}
 ```
 
 ## Supporting checks
