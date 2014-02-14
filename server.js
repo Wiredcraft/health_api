@@ -9,9 +9,7 @@ var tcp = require('net');
 var http = require('http');
 var exec = require('child_process').exec;
 
-var redis = require('redis');
 var express = require('express');
-var cradle = require('cradle');
 var request = require('request');
 
 var info = require('debug')('whi:server:info');
@@ -19,15 +17,14 @@ var debug = require('debug')('whi:server:debug');
 
 var checks = {
     redis: function(cb) {
-        var client = redis.createClient();
-
-        client.on('error', function(err) {
-            cb(err);
-        });
-
-        client.on('connect', function() {
-            cb(null);
-        });
+        var arg = null;
+        try {
+            tcp.connect({port:6379})
+                 .destroy();
+        } catch(err) {
+            arg = err;
+        }
+        return cb(arg);
     },
     couchdb: function(cb) {
         request.get('http://127.0.0.1:5984', function(err) {
@@ -55,12 +52,15 @@ var checks = {
         });
     },
     mongooseim: function(cb) {
+        var arg = null;
         try {
-            tcp.connect({port:5222});
-            return cb(null);
+            tcp.connect({port:5222})
+                 .destroy();
         } catch(err) {
-            return cb(err);
+            arg = err;
         }
+
+        return cb(arg);
     },
     docker: function(cb) {
         return cb(null);
@@ -80,7 +80,7 @@ var basicAuth = express.basicAuth(function(username, password, callback) {
 });
 
 app.get('^/*$', basicAuth, function(req, res) {
-    info("Check: %s", req.params[0]);
+    info("Checking %s", req.params[0]);
     var component = req.params[0];
     var check = checks[component];
 
@@ -91,10 +91,12 @@ app.get('^/*$', basicAuth, function(req, res) {
 
     check.call(this, function(err) {
         if (err) {
+            info("%s is NOT ok", req.params[0]);
             debug(err.message || err);
             return res.send(500);
         }
 
+        info("%s is ok", req.params[0]);
         return res.send(200);
     });
 });
