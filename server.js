@@ -5,72 +5,13 @@ var port = process.env.WHC_PORT || 5002;
 var basicAuthUsername = process.env.WHC_BASIC_AUTH_USERNAME || 'wiredcraft';
 var basicAuthPassword = process.env.WHC_BASIC_AUTH_PASSWORD || 'wuding1189426';
 
-var tcp = require('net');
 var http = require('http');
-var exec = require('child_process').exec;
-
 var express = require('express');
-var request = require('request');
 
 var info = require('debug')('whi:server:info');
 var debug = require('debug')('whi:server:debug');
 
-var checks = {
-    redis: function(cb) {
-        var arg = null;
-        try {
-            tcp.connect({port:6379})
-                 .destroy();
-        } catch(err) {
-            arg = err;
-        }
-        return cb(arg);
-    },
-    couchdb: function(cb) {
-        request.get('http://127.0.0.1:5984', function(err) {
-            return cb(err || null);
-        });
-    },
-    couchbase: function(cb) {
-        request.get('http://127.0.0.1:8091', function(err) {
-            return cb(err || null);
-        });
-    },
-    elasticsearch: function(cb) {
-        request.get('http://127.0.0.1:9200', function(err) {
-            return cb(err || null);
-        });
-    },
-    http: function(cb) {
-        request.get('http://127.0.0.1:80', function(err) {
-            return cb(err || null);
-        });
-    },
-    https: function(cb) {
-        request.get('http://127.0.0.1:443', function(err) {
-            return cb(err || null);
-        });
-    },
-    mongooseim: function(cb) {
-        var arg = null;
-        try {
-            tcp.connect({port:5222})
-                 .destroy();
-        } catch(err) {
-            arg = err;
-        }
-
-        return cb(arg);
-    },
-    docker: function(cb) {
-        return cb(null);
-    },
-    api: function(cb) {
-        request.get('http://127.0.0.1:3000/ping', function(err) {
-            return cb(err || null);
-        });
-    }
-};
+var checks = require('./Checksfile');
 
 var app = express();
 

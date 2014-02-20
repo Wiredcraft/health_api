@@ -10,7 +10,8 @@
     "debug": "~0.7.4",
     "redis": "~0.10.0",
     "cradle": "~0.6.6",
-    "request": "~2.31.0"
+    "request": "~2.31.0",
+    "docker.io": "~0.9.8"
   },
   "devDependencies": {},
   "scripts": {
